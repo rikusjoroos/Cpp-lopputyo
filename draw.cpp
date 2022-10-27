@@ -1,5 +1,7 @@
 #include <iostream>
+#include <conio.h>
 #include "draw.h"
+#include "player.h"
 
 using namespace std;
 
@@ -38,6 +40,61 @@ int Draw::getPlayerY()
     return playerY;
 }
 
+void Draw::setScoreX()
+{
+    int temp = rand() % width;
+    if (temp == 1)
+    {
+        this->scoreX = temp + 1;
+    }
+    else if (temp == width)
+    {
+        this->scoreX = temp -1 ;
+    }
+    else
+    {
+        this->scoreX = temp;
+    }
+    
+}
+
+void Draw::setScoreY()
+{
+    int temp = rand() % heigth;
+    if (temp == 1)
+    {
+        this->scoreY = temp + 1;
+    }
+    else if (temp == heigth)
+    {
+        this->scoreY = temp -1 ;
+    }
+    else
+    {
+        this->scoreY = temp;
+    }
+}
+
+void Draw::setEnemyX()
+{
+    this->enemy1X = rand() % width;
+}
+
+void Draw::setEnemyY()
+{
+    this->enemy1Y = 0;
+}
+
+int Draw::getScoreX()
+{
+    return scoreX;
+}
+
+int Draw::getScoreY()
+{
+    return scoreY;
+}
+
 
 void Draw::draw()
 {
@@ -61,6 +118,14 @@ void Draw::draw()
             {
                 cout << "H";
             }
+            else if(i == scoreY && j == scoreX)
+            {
+                cout << "O";
+            }
+            else if(i == enemy1Y && j == enemy1X)
+            {
+                cout << "X";
+            }
             else
             {
                 cout << " ";
@@ -83,4 +148,84 @@ void Draw::draw()
     cout << endl;
 
 
+}
+
+void Draw::input()
+{
+    if (_kbhit())
+    {
+        switch (_getch())
+        {
+        case 'a':
+            dir = LEFT;
+            break;
+
+        case 'd':
+            dir = RIGHT;
+            break;
+        
+        case 'w':
+             dir = UP;
+             break;
+
+        case 's':
+            dir = DOWN;
+            break;
+    
+        }
+    }
+}
+
+void Draw::movePlayer()
+{
+    switch (dir)
+    {
+        case LEFT:
+        setPlayerX(getPlayerX() - 1);
+        break;
+
+        case RIGHT:
+        setPlayerX(getPlayerX() + 1);
+        break;
+
+        case UP:
+        setPlayerY(getPlayerY() - 1);
+        break;
+
+        case DOWN:
+        setPlayerY(getPlayerY() + 1);
+        break;
+    }
+}
+
+void Draw::collectScore()
+{
+    if (playerX == scoreX && playerY == scoreY)
+    {
+        Player::addPoints();
+        setScoreX();
+        setScoreY();
+    }
+    
+}
+
+void Draw::moveEnemy()
+{
+  
+    enemy1Y++;
+    if(enemy1Y == heigth)
+    {
+        enemy1Y = 0;
+        enemy1X = rand() % width;
+    }
+    else if(enemy1X == playerX && enemy1Y == playerY)
+    {
+        Player::isAlive = false;
+    }
+    else if(playerX == heigth || playerY == width || playerX == 0 || playerY == 0)
+    {
+        Player::isAlive = false;
+    }
+    
+    
 }
