@@ -24,8 +24,11 @@ int main()
         map.input();
         map.collectScore();
         p.printPoints();
+        p.printHighScore();
         Sleep(40);
     }
+
+    p.checkAndWriteHighScore();
     
     return 0;
 }

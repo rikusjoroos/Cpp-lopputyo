@@ -23,5 +23,66 @@ void Player::setPlayerName()
 
 void Player::printPoints()
 {
-    cout << "Score: " << points;
+    cout << "Score: " << points << "\t";
 }
+
+void Player::printHighScore()
+{
+    scoreFile.open("highscore.txt", ios::in);
+
+    if(scoreFile.is_open())
+    {
+        
+        scoreFile >> highScore;
+        cout << "Highscore: " << highScore;
+        scoreFile.close();
+    }
+    else
+        cout << "No highscore.";
+
+   
+}
+
+void Player::checkAndWriteHighScore()
+{
+
+    scoreFile.open("highscore.txt", ios::in);
+
+    if(!scoreFile.is_open())
+    {
+        scoreFile.open("highscore.txt", ios::out);
+        scoreFile << 0;
+        scoreFile.close();
+        scoreFile.open("highscore.txt", ios::in);
+        
+    }
+
+    if(scoreFile.is_open())
+    {
+        
+        int scoreFromFile;
+        scoreFile >> scoreFromFile;
+        scoreFile.close();
+
+        if(scoreFromFile < points)
+        {
+             scoreFile.open("highscore.txt", ios::out);
+             if (scoreFile.is_open())
+             {
+                 scoreFile << points;
+                 scoreFile.close();
+             }
+        
+        
+             
+        }
+
+        
+    }
+
+  
+  
+       
+}
+
+   
