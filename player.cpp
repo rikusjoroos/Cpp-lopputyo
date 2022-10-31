@@ -13,11 +13,8 @@ void Player::addPoints()
     points = points + 1;
 }
 
-void Player::setPlayerName()
+void Player::setPlayerName(string playername)
 {
-    string playername;
-    cout << "Enter player name: ";
-    getline(cin, playername);
     this->name = playername;
 } 
 
@@ -26,34 +23,50 @@ void Player::printPoints()
     cout << "Score: " << points << "\t";
 }
 
-void Player::printHighScore()
+void Player::getHighScore()
 {
-    scoreFile.open("highscore.txt", ios::in);
+    scoreFile.open("highscore.csv", ios::in);
 
     if(scoreFile.is_open())
     {
         
-        scoreFile >> highScore;
-        cout << "Highscore: " << highScore;
-        scoreFile.close();
+        string line = "";
+        getline(scoreFile, line, ',');
+        this->highScoreName = line;
+        line = "";
+        getline(scoreFile, line, ',');
+        this->highScore = stoi(line);
+    }
+    
+
+    scoreFile.close();
+}
+
+void Player::printHighScore()
+{
+    if(highScoreName != "")
+    {
+        cout <<"Highscore: " << highScoreName << ": " << highScore;
     }
     else
+    {
         cout << "No highscore.";
-
+    }
+   
    
 }
 
 void Player::checkAndWriteHighScore()
 {
 
-    scoreFile.open("highscore.txt", ios::in);
+    scoreFile.open("highscore.csv", ios::in);
 
     if(!scoreFile.is_open())
     {
-        scoreFile.open("highscore.txt", ios::out);
-        scoreFile << 0;
+        scoreFile.open("highscore.csv", ios::out);
+        scoreFile <<"Unknown,0";
         scoreFile.close();
-        scoreFile.open("highscore.txt", ios::in);
+        scoreFile.open("highscore.csv", ios::in);
         
     }
 
@@ -61,15 +74,24 @@ void Player::checkAndWriteHighScore()
     {
         
         int scoreFromFile;
-        scoreFile >> scoreFromFile;
+        string strScoreFromFile;
+        string nameFromfile;
+        string line = "";
+        getline(scoreFile, line, ',');
+        nameFromfile = line;
+        line = "";
+        getline(scoreFile, line, ',');
+        strScoreFromFile = line;
+        scoreFromFile = stoi(strScoreFromFile);
+        
         scoreFile.close();
 
         if(scoreFromFile < points)
         {
-             scoreFile.open("highscore.txt", ios::out);
+             scoreFile.open("highscore.csv", ios::out);
              if (scoreFile.is_open())
              {
-                 scoreFile << points;
+                 scoreFile << name <<","<< points << endl;
                  scoreFile.close();
              }
         

@@ -6,23 +6,25 @@
 
 using namespace std;
 
-class Player
+class Player    //tässä luokassa luodaan pelaaja ja pelaajalle olennaiset parametrit
 {
 private:
     string name;
     int highScore;
     fstream scoreFile;
+    string highScoreName ="";
     
 public:
     static int points;
     static bool isAlive;
     Player();
-    void setPlayerName();
+    void setPlayerName(string playername);
     //string getPLayerName();
     static void addPoints();
     void checkAndWriteHighScore();
     void printHighScore();
     void printPoints();
+    void getHighScore();
    
 };
 

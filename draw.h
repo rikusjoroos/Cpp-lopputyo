@@ -1,7 +1,7 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-class Draw
+class Draw //tässä luokassa luodaan kenttä 1. Tämä on myös kenttä 2. base class.
 {
     private:
     int heigth;
@@ -19,6 +19,8 @@ class Draw
     Draw();
     void setHeigth(int height);
     void setWidth(int width);
+    int getHeigth();
+    int getWidth();
     void setPlayerX(int x);
     void setPlayerY(int y);
     int getPlayerX();
@@ -30,10 +32,11 @@ class Draw
     void draw();
     void input();
     void movePlayer();
-    void collectScore();
-    void setEnemyX();
-    void setEnemyY();
-    void moveEnemy();
+    void setEnemy1X();
+    void setEnemy1Y();
+    int getEnemy1X();
+    int getEnemy1Y();
+    void checkTouch();
 };
 
 #endif

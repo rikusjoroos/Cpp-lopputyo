@@ -40,7 +40,7 @@ int Draw::getPlayerY()
     return playerY;
 }
 
-void Draw::setScoreX()
+void Draw::setScoreX() //tässä arvotaan hedelmälle koordinaatti X
 {
     int temp = rand() % width;
     if (temp == 1)
@@ -49,7 +49,7 @@ void Draw::setScoreX()
     }
     else if (temp == width)
     {
-        this->scoreX = temp -1 ;
+        this->scoreX = temp - 1 ;
     }
     else
     {
@@ -58,7 +58,7 @@ void Draw::setScoreX()
     
 }
 
-void Draw::setScoreY()
+void Draw::setScoreY() //tässä arvotaan hedelmälle koordinaatti Y
 {
     int temp = rand() % heigth;
     if (temp == 1)
@@ -67,7 +67,7 @@ void Draw::setScoreY()
     }
     else if (temp == heigth)
     {
-        this->scoreY = temp -1 ;
+        this->scoreY = temp - 1 ;
     }
     else
     {
@@ -75,14 +75,51 @@ void Draw::setScoreY()
     }
 }
 
-void Draw::setEnemyX()
+void Draw::setEnemy1X() //tässä arvotaan viholliselle koordinaatti X
 {
-    this->enemy1X = rand() % width;
+    int temp;
+    temp = rand() % width;
+    if (temp < 1)
+    {
+        this->enemy1X = 2;
+    }
+    else if (temp >= width)
+    {
+        this->enemy1X = width - 2;
+    }
+    else
+    {
+        this->enemy1X = temp;
+    }
+    
 }
 
-void Draw::setEnemyY()
+void Draw::setEnemy1Y() //tässä arvotaan viholliselle koordinaatti Y
 {
-    this->enemy1Y = 0;
+    int temp;
+    temp = rand() % heigth;
+    if (temp < 1)
+    {
+        this->enemy1Y = 2;
+    }
+    else if (temp >= heigth)
+    {
+        this->enemy1Y = heigth - 2;
+    }
+    else
+    {
+        this->enemy1Y = temp;
+    }
+}
+
+int Draw::getEnemy1X() 
+{
+    return enemy1X;
+}
+
+int Draw::getEnemy1Y()
+{
+    return enemy1Y;
 }
 
 int Draw::getScoreX()
@@ -95,12 +132,22 @@ int Draw::getScoreY()
     return scoreY;
 }
 
+int Draw::getHeigth()
+{
+    return heigth;
+}
 
-void Draw::draw()
+int Draw::getWidth()
+{
+    return width;
+}
+
+
+void Draw::draw() //tällä metodilla piiretään pelaaja, pelikenttä, viholliset ja hedelmät
 {
     system("CLS");
 
-    for (int i = 0; i < width + 1; i++)
+    for (int i = 0; i < width+1; i++)
     {
         cout << "#";
     }
@@ -108,7 +155,7 @@ void Draw::draw()
 
     for (int i = 0; i < heigth; i++)
     {
-        for (int j = 0; j < width; j++)
+        for (int j = 0; j < width ; j++)
         {
             if (j == 0)
             {
@@ -150,7 +197,7 @@ void Draw::draw()
 
 }
 
-void Draw::input()
+void Draw::input() //tällä metodilla valvotaan käyttäjän inputtia eli näppäinten painallusta
 {
     if (_kbhit())
     {
@@ -176,7 +223,7 @@ void Draw::input()
     }
 }
 
-void Draw::movePlayer()
+void Draw::movePlayer() //tällä metodilla liikutetaan pelaajaa inputin mukaan
 {
     switch (dir)
     {
@@ -198,34 +245,26 @@ void Draw::movePlayer()
     }
 }
 
-void Draw::collectScore()
+void Draw::checkTouch() //tällä metodilla tarkastetaan onko pelaaja saanut hedelmän tai osunut viholliseen
 {
     if (playerX == scoreX && playerY == scoreY)
     {
         Player::addPoints();
         setScoreX();
         setScoreY();
+        setEnemy1X();
+        setEnemy1Y();
+    }
+
+    if(enemy1X == playerX && enemy1Y == playerY)
+    {
+        Player::isAlive = false;
+    }
+
+    if(playerX == width || playerY == heigth || playerX == 0 || playerY == 0)
+    {
+        Player::isAlive = false;
     }
     
 }
 
-void Draw::moveEnemy()
-{
-  
-    enemy1Y++;
-    if(enemy1Y == heigth)
-    {
-        enemy1Y = 0;
-        enemy1X = rand() % width;
-    }
-    else if(enemy1X == playerX && enemy1Y == playerY)
-    {
-        Player::isAlive = false;
-    }
-    else if(playerX == heigth || playerY == width || playerX == 0 || playerY == 0)
-    {
-        Player::isAlive = false;
-    }
-    
-    
-}

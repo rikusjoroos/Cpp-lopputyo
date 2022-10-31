@@ -2,33 +2,29 @@
 #include <windows.h>
 #include "player.h"
 #include "draw.h"
+#include "level2.h"
+#include "userinterface.h"
 
 int main()
 {
     Draw map = Draw();
+    Level2 map2 = Level2();
     Player p = Player();
-    p.setPlayerName();
-    map.setHeigth(20); 
-    map.setWidth(20);
-    map.setPlayerX(10);
-    map.setPlayerY(15);
-    map.setScoreX();
-    map.setScoreY();
-    map.setEnemyX();
-    map.setEnemyY();
-    while(p.isAlive)
+    
+   // p.getHighScore();
+    //map.setHeigth(20); 
+    //map.setWidth(20);
+    //map.setPlayerX(10);
+    //map.setPlayerY(15);
+    //map.setScoreX();
+    //map.setScoreY();
+    //map.setEnemy1X();
+    //map.setEnemy1Y();
+    while(true)
     {
-        map.draw();
-        map.moveEnemy();
-        map.movePlayer();
-        map.input();
-        map.collectScore();
-        p.printPoints();
-        p.printHighScore();
-        Sleep(40);
+        mainMenu(p,map,map2);
     }
 
-    p.checkAndWriteHighScore();
-    
+    system("pause");
     return 0;
 }
