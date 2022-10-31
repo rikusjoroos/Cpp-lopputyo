@@ -8,22 +8,22 @@ Player::Player()
 
 }
 
-void Player::addPoints()
+void Player::addPoints() //lisätään pelaajalle pisteitä
 {
     points = points + 1;
 }
 
-void Player::setPlayerName(string playername)
+void Player::setPlayerName(string playername) //asetetaan pelaajalle nimi
 {
     this->name = playername;
 } 
 
-void Player::printPoints()
+void Player::printPoints() //tulosetaan pelaajan pisteet
 {
     cout << "Score: " << points << "\t";
 }
 
-void Player::getHighScore()
+void Player::getHighScore() //haetaan tiedostosta parhaat pisteet
 {
     scoreFile.open("highscore.csv", ios::in);
 
@@ -42,7 +42,7 @@ void Player::getHighScore()
     scoreFile.close();
 }
 
-void Player::printHighScore()
+void Player::printHighScore() //tulostetaan parhaat pisteet
 {
     if(highScoreName != "")
     {
@@ -56,7 +56,7 @@ void Player::printHighScore()
    
 }
 
-void Player::checkAndWriteHighScore()
+void Player::checkAndWriteHighScore() //tarkastetaan tuliko uudet parhaat pisteet ja korvataan tiedosto mikäli tuli
 {
 
     scoreFile.open("highscore.csv", ios::in);
