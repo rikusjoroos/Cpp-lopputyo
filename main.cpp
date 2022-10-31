@@ -11,15 +11,6 @@ int main()
     Level2 map2 = Level2();
     Player p = Player();
     
-   // p.getHighScore();
-    //map.setHeigth(20); 
-    //map.setWidth(20);
-    //map.setPlayerX(10);
-    //map.setPlayerY(15);
-    //map.setScoreX();
-    //map.setScoreY();
-    //map.setEnemy1X();
-    //map.setEnemy1Y();
     while(true)
     {
         mainMenu(p,map,map2);
